@@ -1,0 +1,253 @@
+<div class="row">
+  <div class="col-md-12">
+    <nb-card class="inline-form-card">
+      <nb-card-header>Some general text here</nb-card-header>
+      <nb-card-body>
+        <p>
+          Value: {{ hoaForm.controls['hoaName'].value }} Property Type: {{ hoaForm.controls['hoaPropertyType'].value }}
+        </p>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+
+<div class="row">
+
+  <div class="col-md-6">
+    <nb-card>
+      <nb-card-header>Association Details</nb-card-header>
+      <nb-card-body>
+        <form [formGroup]="hoaForm" (ngSubmit)="onHoaFormSubmit()">
+          <div class="form-group">
+            <label for="hoaName" class="label">Name</label>
+            <input type="text" formControlName="hoaName" nbInput fullWidth id="hoaName"
+              placeholder="My Association Name">
+            <div *ngIf="hoaForm.controls['hoaName'].invalid && (hoaForm.controls['hoaName'].dirty 
+            || hoaForm.controls['hoaName'].touched || hoaFormSubmitted)" class="alert alert-danger">
+              <div *ngIf="hoaForm.controls['hoaName'].errors.required">
+                Name is required.
+              </div>
+              <div *ngIf="hoaForm.controls['hoaName'].errors.minlength">
+                Name must be at least 5 characters long.
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="hoaPropertyType" class="label" (change)="onPropertyTypeChange()">Property Type</label><br>
+            <nb-select id="hoaPropertyType" formControlName="hoaPropertyType" selected="High Rise Condo (5+ floors)"
+              fullWidth>
+              <nb-option value="High Rise Condo (5+ floors)">High Rise Condo (5+ floors)</nb-option>
+              <nb-option value="Low Rise Condo (2 to 4 floors)">Low Rise Condo (2 to 4 floors)</nb-option>
+              <nb-option value="Townhome / Shared Wall(s)">Townhome / Shared Wall(s)</nb-option>
+              <nb-option value="Single Family">Single Family</nb-option>
+              <nb-option value="Mobile / Manufactured">Mobile / Manufactured</nb-option>
+              <nb-option value="Other">Other</nb-option>
+            </nb-select>
+            <div *ngIf="hoaForm.controls['hoaPropertyType'].invalid && (hoaForm.controls['hoaPropertyType'].dirty 
+              || hoaForm.controls['hoaPropertyType'].touched || hoaFormSubmitted)" class="alert alert-danger">
+              <div *ngIf="hoaForm.controls['hoaPropertyType'].errors.required">
+                Property Type is required.
+              </div>
+            </div>
+          </div>
+          <div class="form-group" *ngIf="hoaForm.controls['hoaPropertyType'].value === 'Other'">
+            <label for="otherPropertyTypeDescription" class="label">Other Property Type Description</label>
+            <input type="text" formControlName="otherPropertyTypeDescription" nbInput fullWidth
+              id="otherPropertyTypeDescription" placeholder="My property type">
+            <div *ngIf="hoaForm.controls['otherPropertyTypeDescription'].value==='' && (hoaForm.controls['otherPropertyTypeDescription'].dirty 
+                || hoaForm.controls['otherPropertyTypeDescription'].touched || hoaFormSubmitted)"
+              class="alert alert-danger">
+              <!-- <div *ngIf="hoaForm.controls['otherPropertyTypeDescription'].errors.required"> -->
+              Description is required.
+              <!-- </div> -->
+            </div>
+          </div>
+          <div class="form-group" *ngIf="hoaForm.controls['hoaPropertyType'].value.includes('Condo')">
+            <label for="numberOfFloors" class="label">Number of floors in building</label>
+            <input type="text" formControlName="numberOfFloors" nbInput fullWidth id="numberOfFloors" placeholder="8">
+            <div *ngIf="hoaForm.controls['numberOfFloors'].value==='' && (hoaForm.controls['numberOfFloors'].dirty 
+                || hoaForm.controls['numberOfFloors'].touched || hoaFormSubmitted)" class="alert alert-danger">
+              <!-- <div *ngIf="hoaForm.controls['otherPropertyTypeDescription'].errors.required"> -->
+              Number of floors is required.
+              <!-- </div> -->
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="yearBuilt" class="label">Year Built / First Established</label>
+            <input type="number" formControlName="yearBuilt" nbInput fullWidth id="yearBuilt" placeholder="1980">
+            <div *ngIf="hoaForm.controls['yearBuilt'].invalid && (hoaForm.controls['yearBuilt'].dirty 
+              || hoaForm.controls['yearBuilt'].touched || hoaFormSubmitted)" class="alert alert-danger">
+              <div *ngIf="hoaForm.controls['yearBuilt'].errors.required">
+                Year Built (or the earliest year the association was established) is required.
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="numberOfUnits" class="label">Number of Units</label>
+            <input type="number" formControlName="numberOfUnits" nbInput fullWidth id="numberOfUnits" placeholder="240">
+            <div *ngIf="hoaForm.controls['numberOfUnits'].invalid && (hoaForm.controls['numberOfUnits'].dirty 
+                || hoaForm.controls['numberOfUnits'].touched || hoaFormSubmitted)" class="alert alert-danger">
+              <div *ngIf="hoaForm.controls['numberOfUnits'].errors.required">
+                Number of units is required.
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="averageSqFtPerUnit" class="label">Average Sq Ft/Unit</label>
+            <input type="number" formControlName="averageSqFtPerUnit" nbInput fullWidth id="averageSqFtPerUnit"
+              placeholder="1,250">
+            <div *ngIf="hoaForm.controls['averageSqFtPerUnit'].invalid && (hoaForm.controls['averageSqFtPerUnit'].dirty 
+                || hoaForm.controls['averageSqFtPerUnit'].touched || hoaFormSubmitted)" class="alert alert-danger">
+              <div *ngIf="hoaForm.controls['averageSqFtPerUnit'].errors.required">
+                Square footage per units is required. If you don't know the exact number, use an estimate so it can be
+                used in our reports
+              </div>
+            </div>
+          </div>
+          <button type="submit" nbButton>Save</button>
+          <!-- <button type="submit" nbButton [disabled]="!hoaForm.valid">Save</button>
+            <button nbButton (click)="updateHoaName()">Update HOA Name</button> -->
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+
+  <div class="col-md-6">
+    <nb-card>
+      <nb-card-header>Address</nb-card-header>
+      <nb-card-body>
+        <form [formGroup]="hoaAddressForm" (ngSubmit)="onHoaAddressSubmit()">
+          <div class="form-group">
+            <label for="address1" class="label">Address Line 1</label>
+            <input type="text" formControlName="address1" nbInput fullWidth id="address1" placeholder="123 Main St">
+            <div *ngIf="hoaAddressForm.controls['address1'].invalid && (hoaAddressForm.controls['address1'].dirty
+                     || hoaAddressForm.controls['address1'].touched || hoaAddressFormSubmitted)"
+              class="alert alert-danger">
+              <div *ngIf="hoaAddressForm.controls['address1'].errors.required">
+                Address 1 is required.
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="address2" class="label">Address Line 2</label>
+            <input type="text" formControlName="address2" nbInput fullWidth id="address2" placeholder="Unit #1">
+          </div>
+          <div class="form-group">
+            <label for="city" class="label">City</label>
+            <input type="text" formControlName="city" nbInput fullWidth id="city" placeholder="City">
+            <div *ngIf="hoaAddressForm.controls['city'].invalid && (hoaAddressForm.controls['city'].dirty
+                     || hoaAddressForm.controls['city'].touched || hoaAddressFormSubmitted )"
+              class="alert alert-danger">
+              <div *ngIf="hoaAddressForm.controls['city'].errors.required">
+                City is required.
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="state" class="label">State</label>
+            <div>
+                <nb-select fullWidth formControlName="stateList">
+                  <!-- <nb-option value="1">Option 1</nb-option>
+                  <nb-option value="2">Option 2</nb-option> -->
+                  <nb-option *ngFor="let state of states" value="state.stateCode">{{state.stateName}}</nb-option>
+
+                </nb-select>
+            </div>
+            <!-- <input type="text" formControlName="stateList" nbInput fullWidth id="stateList" placeholder=""> -->
+            <div *ngIf="hoaAddressForm.controls['stateList'].invalid && (hoaAddressForm.controls['stateList'].dirty
+                     || hoaAddressForm.controls['stateList'].touched || hoaAddressFormSubmitted)"
+              class="alert alert-danger">
+              <div *ngIf="hoaAddressForm.controls['stateList'].errors.required">
+                State is required.
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="zip" class="label">Zip</label>
+            <input type="text" formControlName="zip" nbInput fullWidth id="zip" placeholder="00000">
+            <div *ngIf="hoaAddressForm.controls['zip'].invalid && (hoaAddressForm.controls['zip'].dirty
+                     || hoaAddressForm.controls['zip'].touched || hoaAddressFormSubmitted)" class="alert alert-danger">
+              <div *ngIf="hoaAddressForm.controls['zip'].errors.required">
+                Zip is required.
+              </div>
+            </div>
+          </div>
+          <button type="submit" nbButton>Save</button>
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+
+
+  <!-- <div class="col-md-6">
+    <nb-card>
+      <nb-card-header></nb-card-header>
+      <nb-card-body>
+        <div class="row">
+          <form [formGroup]="hoaForm" (ngSubmit)="onLookupAddress()">
+              
+            <div formGroupName="address">
+              <div class="form-group">
+                <label for="address1" class="label">Address Line 1</label>
+                <input type="text" formControlName="address1" nbInput fullWidth id="address1" placeholder="123 Main St">
+              </div>
+              <div class="form-group">
+                <label for="address2" class="label">Address Line 2</label>
+                <input type="text" formControlName="address2" nbInput fullWidth id="address2" placeholder="Unit #1">
+              </div>
+              <div class="form-group">
+                <label for="city" class="label">City</label>
+                <input type="text" formControlName="city" nbInput fullWidth id="city" placeholder="City">
+              </div>
+              <div class="form-group">
+                <label for="state" class="label">State</label>
+                <input type="text" formControlName="state" nbInput fullWidth id="state" placeholder="">
+              </div>
+              <div class="form-group">
+                <label for="zip" class="label">Zip</label>
+                <input type="text" formControlName="zip" nbInput fullWidth id="zip" placeholder="00000">
+              </div>
+            </div>
+            <button type="submit" nbButton >Save</button>
+          </form>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div> -->
+</div>
+
+<!-- <div class="row">
+  <div class="col-md-6">
+    <nb-card>
+      <nb-card-header>Horizontal form</nb-card-header>
+      <nb-card-body>
+        <form class="form-horizontal">
+          <div class="form-group row">
+            <label for="inputEmail3" class="label col-sm-3 form-control-label">Email</label>
+            <div class="col-sm-9">
+              <input type="email" nbInput fullWidth id="inputEmail3" placeholder="Email">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputPassword3" class="label col-sm-3 form-control-label">Password</label>
+            <div class="col-sm-9">
+              <input type="password" nbInput fullWidth id="inputPassword3" placeholder="Password">
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="offset-sm-3 col-sm-9">
+              <div class="checkbox">
+                <nb-checkbox>Remember me</nb-checkbox>
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="offset-sm-3 col-sm-9">
+              <button type="submit" nbButton status="warning">Sign in</button>
+            </div>
+          </div>
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div> -->
