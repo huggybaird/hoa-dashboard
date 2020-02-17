@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import { States } from '../hoa-data/states';
 import { catchError, map } from 'rxjs/operators';
 
-const TOTAL_PAGES = 7;
+// const TOTAL_PAGES = 7;
 
 
 
@@ -27,20 +27,20 @@ export class HoaService {
  * @param operation - name of the operation that failed
  * @param result - optional value to return as the observable result
  */
-private handleError<T> (operation = 'operation', result?: T) {
-  return (error: any): Observable<T> => {
+// private handleError<T> (operation = 'operation', result?: T) {
+//   return (error: any): Observable<T> => {
 
-    // TODO: send the error to remote logging infrastructure
-    console.error(error); // log to console instead
+//     // TODO: send the error to remote logging infrastructure
+//     console.error(error); // log to console instead
 
-    // TODO: better job of transforming error for user consumption
-    // this.log(`${operation} failed: ${error.message}`);
+//     // TODO: better job of transforming error for user consumption
+//     // this.log(`${operation} failed: ${error.message}`);
 
-    // Let the app keep running by returning an empty result.
-    return of(result as T);
-  };
-}
-  getMessage(): string{
+//     // Let the app keep running by returning an empty result.
+//     return of(result as T);
+//   };
+// }
+  getMessage(): string {
     return 'Got this from the HoaService!';
   }
 /** GET heroes from the server */

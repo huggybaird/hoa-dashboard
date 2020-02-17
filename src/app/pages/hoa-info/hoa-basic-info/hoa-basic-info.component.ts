@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import {HoaService} from '../hoa.service';
 
-import { HttpClient } from '@angular/common/http';
+// import { HttpClient } from '@angular/common/http';
 import { States } from '../../hoa-data/states';
-// import {Hoa} from '../hoa'; 
+// import {Hoa} from '../hoa';
 
 @Component({
   selector: 'ngx-hoa-basic-info',
@@ -12,7 +12,7 @@ import { States } from '../../hoa-data/states';
   templateUrl: './hoa-basic-info.component.html',
   providers: [HoaService],
 })
-export class HoaBasicInfoComponent {
+export class HoaBasicInfoComponent implements OnInit {
   states: States[];
   // states: States[] =  [{
   //   stateCode: 'AL',
@@ -82,7 +82,7 @@ export class HoaBasicInfoComponent {
   // });
   // hoaName = new FormControl('');
   // hoaPropertyType = new FormControl('');
-  // otherPropertyTypeDescription = new FormControl(''); 
+  // otherPropertyTypeDescription = new FormControl('');
 
   updateHoaName() {
     this.hoaForm.controls['hoaName'].setValue('Nancy');
@@ -123,30 +123,22 @@ export class HoaBasicInfoComponent {
     //     const c = a + b;
     // }
     return;
-    let myStates = this.hoaService.getStates();
-    console.warn(myStates);
-    return;
-    this.hoaService.getStates()
-      .subscribe(states => (myStates = states));
-      const myMessage = this.hoaService.getMessage();
-      // console.warn(myMessage);
+    // let myStates = this.hoaService.getStates();
+    // console.warn(myStates);
+    // return;
+    // this.hoaService.getStates()
+    //   .subscribe(states => (myStates = states));
+    //   const myMessage = this.hoaService.getMessage();
+    //   // console.warn(myMessage);
   }
-  // getStates(): void {
-  //   this.hoaService.getStates()
-  //     .subscribe(states => (this.states = states));
-  //     const myMessage = this.hoaService.getMessage();
-  //     console.warn(myMessage);
-  //     console.warn(this.states);
-  // }
-  // showConfig() {
-  //   this.hoaService.getStates()
-  //     .subscribe((data: States) => this.states = {
-  //       heroesUrl: data['heroesUrl'],
-  //       textfile: data['textfile']
-  //     });
-  // }
+  onPropertyTypeChange() {
+    return null;
+  }
+
   ngOnInit() {
     this.getStates();
   }
-  constructor(private fb: FormBuilder, private hoaService: HoaService) { }
+  constructor(private fb: FormBuilder, private hoaService: HoaService) { 
+    this.hoaService.getStates();
+  }
 }

@@ -8,7 +8,7 @@ describe('HoaInformationComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HoaInformationComponent ]
+      declarations: [ HoaInformationComponent ],
     })
     .compileComponents();
   }));

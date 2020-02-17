@@ -20,7 +20,7 @@ import {
 // import { FormsModule as ngFormsModule } from '@angular/forms';
 // import {HoaInputModule} from '../hoa-input.module';
 // import the ThemeModule in your module.ts file from src/app/@theme.
-import {ThemeModule} from '../../../@theme/theme.module';
+// import {ThemeModule} from '../../../@theme/theme.module';
 @Component({
   selector: 'ngx-hoa-information',
   templateUrl: './hoa-information.component.html',
