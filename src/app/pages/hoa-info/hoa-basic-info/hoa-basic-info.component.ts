@@ -138,7 +138,7 @@ export class HoaBasicInfoComponent implements OnInit {
   ngOnInit() {
     this.getStates();
   }
-  constructor(private fb: FormBuilder, private hoaService: HoaService) { 
+  constructor(private fb: FormBuilder, private hoaService: HoaService) {
     this.hoaService.getStates();
   }
 }
