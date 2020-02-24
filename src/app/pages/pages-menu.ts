@@ -8,34 +8,17 @@ export const MENU_ITEMS: NbMenuItem[] = [
     home: true,
   },
   {
-    title: 'Hoa Information',
-    icon: 'edit-2-outline',
-    children: [
-      {
-        title: 'Basic Info',
-        link: '/pages/hoa-info/basic-info',
-      },
-      {
-        title: 'Reserve Components',
-        link: '/pages/hoa-info/reserve-components',
-      },
-    ],
-  },
-  {
     title: 'Input',
     icon: 'edit-2-outline',
     children: [
       {
         title: 'HOA Information',
-        link: '/pages/hoa-input/hoa-information',
-      },
-      {
-        title: 'HOA Information2',
-        link: '/pages/forms/inputs',
+        link: '/pages/hoa-info/basic-info',
+        // link: '/pages/hoa-input/hoa-information',
       },
       {
         title: 'Reserve Components',
-        link: '/pages/forms/layouts',
+        link: '/pages/hoa-info/reserve-components',
       },
       {
         title: 'Bank Accounts',

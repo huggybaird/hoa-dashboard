@@ -8,7 +8,7 @@ import { ECommerceModule } from './e-commerce/e-commerce.module';
 import { PagesRoutingModule } from './pages-routing.module';
 import { MiscellaneousModule } from './miscellaneous/miscellaneous.module';
 import { HoaInformationComponent } from './hoa-input/hoa-information/hoa-information.component';
-import { HoaInfoModule } from './hoa-info/hoa-info.module';
+import { HoaInfoModule } from './hoa-input/hoa-info.module';
 
 @NgModule({
   imports: [

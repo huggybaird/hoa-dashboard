@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import {HoaService} from '../hoa.service';
+import {HoaService, Config, Hoa} from '../hoa.service';
 
 // import { HttpClient } from '@angular/common/http';
-import { States } from '../../hoa-data/states';
+import { Observable } from 'rxjs';
 // import {Hoa} from '../hoa';
 
 @Component({
@@ -13,31 +13,27 @@ import { States } from '../../hoa-data/states';
   providers: [HoaService],
 })
 export class HoaBasicInfoComponent implements OnInit {
-  states: States[];
-  // states: States[] =  [{
-  //   stateCode: 'AL',
-  //   stateName: 'Alabama',
-  //  },
-  //  {
-  //   stateCode: 'OH',
-  //   stateName: 'Ohio',
-  //  },
-  //  {
-  //   stateCode: 'NY',
-  //   stateName: 'New York',
-  //  }];
-  //  states =  [{
-  //   stateCode: 'AL',
-  //   stateName: 'Alabama',
-  //  },
-  //  {
-  //   stateCode: 'OH',
-  //   stateName: 'Ohio',
-  //  },
-  //  {
-  //   stateCode: 'NY',
-  //   stateName: 'New York',
-  //  }];
+  states: State[];
+  config: Config[];
+  propertyTypes: PropertyType[];
+  hoa: Hoa = {id:	-99,
+    userId: -99,
+    name:	null,
+    propertyType:	null,
+    propertyTypeDesc:	null,
+    floorCount:	null,
+    sqFtPerUnit: null,
+    unitCount: null,
+    yearBuilt: null,
+    hoaWebsiteUrl: null,
+    address1:	'',
+    address2:	'',
+    city:	'',
+    state:	'',
+    zip:	'',
+  };
+
+
   hoaFormSubmitted = false;
   hoaAddressFormSubmitted = false;
 
@@ -89,13 +85,29 @@ export class HoaBasicInfoComponent implements OnInit {
   }
 
   onHoaFormSubmit() {
-    this.hoaFormSubmitted = true;
 
     // stop here if form is invalid
     if (this.hoaForm.invalid) {
       return;
     }
-    console.warn(this.hoaForm.value);
+    this.hoaFormSubmitted = true;
+    this.hoa.name = this.hoaForm.controls['hoaName'].value;
+    this.hoa.propertyType =	this.hoaForm.controls['hoaPropertyType'].value;
+    this.hoa.propertyTypeDesc =	this.hoaForm.controls['otherPropertyTypeDescription'].value;
+    this.hoa.floorCount =	this.hoaForm.controls['numberOfFloors'].value;
+    this.hoa.sqFtPerUnit = this.hoaForm.controls['averageSqFtPerUnit'].value;
+    this.hoa.unitCount =	this.hoaForm.controls['numberOfUnits'].value;
+    this.hoa.yearBuilt =		this.hoaForm.controls['yearBuilt'].value;
+    this.hoa.hoaWebsiteUrl =	''; // this.hoaForm.controls['hoaWebsiteUrl'].value;
+
+    this.hoaService.saveHoa(this.hoa).subscribe(
+      (response) =>  {
+          this.hoa = response;
+          // console.log(response);
+          // console.log('exiting saveHoa()');
+         },
+    );
+    // console.warn(this.hoaForm.value);
     alert('SUCCESS HOA Info!! :-)');
   }
   onHoaAddressSubmit() {
@@ -109,36 +121,57 @@ export class HoaBasicInfoComponent implements OnInit {
     alert('SUCCESS ADDRESS!! :-)');
   }
 
-  getStates(): void {
-    // return;
-    const data = require('../../../../assets/data/states.json');
-    this.states = data;
-    console.warn('states = ' + this.states);
-    // console.warn(this.states);
-    // console.warn(data);
-    // for (const num of data) {
-    //     console.warn(num);
-    //     const a = num['stateName'];
-    //     const b = num['stateCode'];
-    //     const c = a + b;
-    // }
-    return;
-    // let myStates = this.hoaService.getStates();
-    // console.warn(myStates);
-    // return;
-    // this.hoaService.getStates()
-    //   .subscribe(states => (myStates = states));
-    //   const myMessage = this.hoaService.getMessage();
-    //   // console.warn(myMessage);
-  }
   onPropertyTypeChange() {
+    const a = this.hoaForm.controls['hoaPropertyType'].value;
+    if (a === 'Other')
+    return 1;
+
     return null;
   }
 
   ngOnInit() {
-    this.getStates();
+    this.hoaService.getConfigs().subscribe(
+      (configs) =>  {
+        // console.log('received getConfig()');
+        for (const config of configs){
+          if (config.name === 'states') {
+            this.states = JSON.parse(config.value);
+          }
+          if (config.name === 'PropertyType') {
+            this.propertyTypes = JSON.parse(config.value);
+          }
+        }
+        //  console.log('exiting getConfig()');
+         },
+    );
   }
-  constructor(private fb: FormBuilder, private hoaService: HoaService) {
-    this.hoaService.getStates();
-  }
+  constructor(private fb: FormBuilder, private hoaService: HoaService) { }
+
+
+
 }
+export interface State {
+  state: string;
+  stateCode: string;
+  census: number;
+  population2010: string;
+  population2018: string;
+}
+ // {
+  //   "state": "Alabama",
+  //   "census": 4779736,
+  //   "stateCode": "AL",
+  //   "population2010": 4785448,
+  //   "population2018": 4887871
+  // }
+export interface PropertyType {
+  name: string;
+}
+// [
+//   {"name": "High Rise Condo (5+ floors)"},
+//   {"name": "Low Rise Condo (2 to 4 floors)"},
+//   {"name": "Townhome / Shared Wall(s)"},
+//   {"name": "Single Family"},
+//   {"name": "Mobile / Manufactured"},
+//   {"name": "Other"}
+// ]

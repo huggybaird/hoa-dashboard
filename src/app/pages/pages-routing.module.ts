@@ -13,7 +13,7 @@ const routes: Routes = [{
   children: [
     {
       path: 'hoa-info',
-      loadChildren: () => import('./hoa-info/hoa-info.module')
+      loadChildren: () => import('./hoa-input/hoa-info.module')
         .then(m => m.HoaInfoModule),
     },
     {

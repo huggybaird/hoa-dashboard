@@ -34,14 +34,17 @@
           </div>
           <div class="form-group">
             <label for="hoaPropertyType" class="label" (change)="onPropertyTypeChange()">Property Type</label><br>
-            <nb-select id="hoaPropertyType" formControlName="hoaPropertyType" selected="High Rise Condo (5+ floors)"
+            <nb-select id="hoaPropertyType" formControlName="hoaPropertyType" selected="High Rise Condo (5+ floors)" 
               fullWidth>
-              <nb-option value="High Rise Condo (5+ floors)">High Rise Condo (5+ floors)</nb-option>
+              
+              <nb-option *ngFor="let propertyType of propertyTypes" value="{{propertyType.name}}">{{propertyType.name}}</nb-option>
+
+              <!-- <nb-option value="High Rise Condo (5+ floors)">High Rise Condo (5+ floors)</nb-option>
               <nb-option value="Low Rise Condo (2 to 4 floors)">Low Rise Condo (2 to 4 floors)</nb-option>
               <nb-option value="Townhome / Shared Wall(s)">Townhome / Shared Wall(s)</nb-option>
               <nb-option value="Single Family">Single Family</nb-option>
               <nb-option value="Mobile / Manufactured">Mobile / Manufactured</nb-option>
-              <nb-option value="Other">Other</nb-option>
+              <nb-option value="Other">Other</nb-option> -->
             </nb-select>
             <div *ngIf="hoaForm.controls['hoaPropertyType'].invalid && (hoaForm.controls['hoaPropertyType'].dirty 
               || hoaForm.controls['hoaPropertyType'].touched || hoaFormSubmitted)" class="alert alert-danger">
@@ -149,7 +152,7 @@
                 <nb-select fullWidth formControlName="stateList">
                   <!-- <nb-option value="1">Option 1</nb-option>
                   <nb-option value="2">Option 2</nb-option> -->
-                  <nb-option *ngFor="let state of states" value="state.stateCode">{{state.stateName}}</nb-option>
+                  <nb-option *ngFor="let state of states" value="{{state.stateCode}}">{{state.state}}</nb-option>
 
                 </nb-select>
             </div>
