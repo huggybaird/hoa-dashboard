@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { States } from '../hoa-data/states';
-import { publishReplay, refCount, map } from 'rxjs/operators';
+import { publishReplay, refCount } from 'rxjs/operators';
 // import { catchError, map } from 'rxjs/operators';
 
 // const TOTAL_PAGES = 7;

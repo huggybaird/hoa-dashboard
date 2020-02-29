@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import {HoaService, Config, Hoa} from '../hoa.service';
-
-// import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-// import {Hoa} from '../hoa';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'ngx-hoa-basic-info',
@@ -33,6 +30,7 @@ export class HoaBasicInfoComponent implements OnInit {
     zip:	'',
   };
 
+  api_url: string;
 
   hoaFormSubmitted = false;
   hoaAddressFormSubmitted = false;
@@ -144,6 +142,8 @@ export class HoaBasicInfoComponent implements OnInit {
         //  console.log('exiting getConfig()');
          },
     );
+
+    this.api_url = environment.apiUrl;
   }
   constructor(private fb: FormBuilder, private hoaService: HoaService) { }
 
